@@ -4,7 +4,7 @@ from decouple import config
 import os
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
-
+print(BASE_DIR)
 class Config:
     SECRET_KEY = config("SECRET_KEY")
     SQLALCHEMY_TRACK_MODIFICATIONS = config(
@@ -13,7 +13,7 @@ class Config:
     )
 
 class DevConfig(Config):
-    SQLALCHEMY_DATABASE_URI = "sqlite///" \
+    SQLALCHEMY_DATABASE_URI = "sqlite:///" \
         + os.path.join(BASE_DIR, "dev.db")
     DEBUG = True
     SQLALCHEMY_ECHO = True

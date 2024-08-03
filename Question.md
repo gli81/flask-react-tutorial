@@ -8,6 +8,12 @@
 
 #### `Api` relationship to `app`
 
+### `os.path.realpath(__file__)`
+
+#### `os.path.realpath()`
+
+#### `__file__`
+
 ### `flask_sqlalchemy`
 
 #### Best way `Flask` interact with DB 
