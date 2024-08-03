@@ -8,4 +8,16 @@
 
 #### `Api` relationship to `app`
 
+### `flask_sqlalchemy`
+
+#### Best way `Flask` interact with DB 
+
+### `@app.shell_context_processor`?
+
+### `export FLASK_APP=main.py` OR `set FLASK_APP=main.py`
+
+#### What features it provide?
+
+### `flask shell` command
+
 ## React Frontend
