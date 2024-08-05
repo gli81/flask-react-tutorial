@@ -33,6 +33,8 @@
   - `Engine` object
   - `Connection` object
     - execute, commit
+    - pass dictionaries to `execute()` as parameters to the SQL expression
+    - pass a list of dictionaries to `execute()` as multiple parameters to the SQL expression
   - `Result` object
     - type of return value of an execution 
     - `for row in result:` `Row` object: act like named tuples
