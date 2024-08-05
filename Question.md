@@ -41,6 +41,18 @@
     - `result.all()`
     - transform to `MappingResult` object with `result.mappings()`
   - `Session` object
+    - counterpart of `Connection` for ORM usage (`Connection` is for Core usage)
+      - ??? what is the difference between Core usage and ORM usage ???
+  - `MetaData` object: used to store tables
+  - `Table` object
+  - `Column` object
+    - `nullable`, `primary_key`, `ForeignKey()`
+  - ORM mapped class
+    - a `Base` class inherits `DeclaritiveBase` class, every other table in the metadata inherits `Base`
+    - type annotation can be used to indicate SQL data type
+    - `mapped_column()`, `relationship()`
+    - [other styles of ORM mapped class](https://docs.sqlalchemy.org/en/20/orm/mapping_styles.html#orm-mapping-styles)
+    - 
 
 ### `@app.shell_context_processor`?
 
