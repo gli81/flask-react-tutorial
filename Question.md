@@ -28,6 +28,18 @@
 
 - Data models
 
+- `SQLAlchemy`: have a separate note later
+  
+  - `Engine` object
+  - `Connection` object
+    - execute, commit
+  - `Result` object
+    - type of return value of an execution 
+    - `for row in result:` `Row` object: act like named tuples
+    - `result.all()`
+    - transform to `MappingResult` object with `result.mappings()`
+  - `Session` object
+
 ### `@app.shell_context_processor`?
 
 ### `export FLASK_APP=main.py` OR `set FLASK_APP=main.py`
