@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from exts import db
+from sqlalchemy.orm import Mapped, mapped_column
 
 
 class Recipe(db.Model):
@@ -20,9 +21,15 @@ class Recipe(db.Model):
         delete
         update
     """
-    id = db.Column(db.Integer(), primary_key=True)
-    title = db.Column(db.String(), nullable=False)
-    description = db.Column(db.Text(), nullable=False)
+    id: Mapped[int] = mapped_column(primary_key=True)
+    title: Mapped[str] = mapped_column(
+        db.String(),
+        nullable=False
+    )
+    description: Mapped[str] = mapped_column(
+        db.Text(),
+        nullable=False
+    )
 
     def __repr__(self):
         return f"<Recipe {self.title}>"
