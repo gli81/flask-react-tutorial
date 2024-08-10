@@ -28,7 +28,7 @@
 
 - Data models
 
-- `SQLAlchemy`: have a separate note later
+- `SQLAlchemy`: [See here](./SQLAlchemy.md)
   
   - `Engine` object
   - `Connection` object
@@ -49,8 +49,10 @@
     - `nullable`, `primary_key`, `ForeignKey()`
   - ORM mapped class
     - a `Base` class inherits `DeclaritiveBase` class, every other table in the metadata inherits `Base`
-    - type annotation can be used to indicate SQL data type
+    - type annotation can be used to indicate SQL data type, 可以根据type annotation来自动推断一些trait比如nullable
     - `mapped_column()`, `relationship()`
+      - `back_populates` parameter of `relationship()` link two tables, so that when update one table, the other will also be updated
+      - ?????好像是说mapped_column如果是list类型 那就算创建时没有赋值也会是空list而不是None, 可以自动追踪list内element的变化 flush时可以自动解析顺序?????
     - [other styles of ORM mapped class](https://docs.sqlalchemy.org/en/20/orm/mapping_styles.html#orm-mapping-styles)
   - `insert()` function and `Insert` instance: `insert()` function produces an `Insert` instance, which can be passed to `execute()` function to get `Result`
     - `conn.execute(insert(<table>).values(<column1> = <value>, <column2> = <value>))`
@@ -102,8 +104,29 @@
     - table alias
       - Core: `<variable> = <Table>.alias()`, set before constructing Select
       - ORM: `<variable> = aliased(<class>)`, set before constructing Select
+    - __SKIP FROM `Subqueries and CTEs` SECTION__
   - `compile()`
-  - __SKIP FROM `Subqueries and CTEs` SECTION__
+  - `update()` function and `Update` instance: `update()` function produces an `Update` instance, which can be passed to `execute()` function to get `Result`
+    - `.where()` method: specify which old values to change
+    - `.values()` method: put int new values
+    - `bindparam()`: when updating different old values with different new values, `.where(<Table>.c.<column> == bindparam("<name_for_old_value>")).values(<column> = bindparam("name_for_new_value"))`, when executing, pass a list of dictionaries like `{<name_for_old_value>: <old_value>, <name_for_new_value>: <new_value>}`
+    - ?????correlated subquery?????
+    - ?????`UPDATE ... FROM ...` clause?????
+    - `.ordered_values()`: MySQL only parameter ordered updates, update multiple variables in an order, update one, then next one based on previous one, `.ordered_values((<Table>.c.<column1>, <value1>), (<Table>.c.<column2>, <Table>.c.<column1> + <value2>))`
+  - `delete()` function and `Delete` instance: `delete()` function produces an `Delete` instance, which can be passed to `execute()` function to get `Result`
+    - `.where()` method: specifies what rows to delete
+    - ????? multiple table delete?????
+  - `CursorResult.rowcount()`: `CursorResult` is subclass of `Result`, get affected rows from update and delete
+    - `CursorResult` is the return type of `conn.execute()` for all operations for CORE use, and the return type of `session.execute()` for INSERT, UPDATE, and DELETE for ORM use.
+  - ????? `.returning()` for DELETE and UPDATE ?????
+  - ORM insert: create object of the `<class>`, then `session.add()`, then `session.flush()`, creating object => transient, `session.add()` => pending, `session.flush()` => persistent, communicate with a transaction. flush not usually necessary, because autoflush when commit
+  - ORM update: select first, make changes to the result object, it will be recorded, when next time there is a flush next time, the change will be made to the database. Autoflush before each query.
+  - ORM delete: select first, then `session.delete(<object>)`, will be deleted in transaction in next flush
+  - bulk DML, using methods similar to CORE method: [link](https://docs.sqlalchemy.org/en/20/orm/queryguide/dml.html#orm-expression-update-delete)
+  - rollback: removes all changes made to the local item in the transaction
+  - `session.close()`: close a session, will rollback first, after closing a session, all objects created during the session is detached and will cause error if try to access
+  - ?????Loading strategies?????
+    - `Select.options()`
 
 ### `@app.shell_context_processor`?
 

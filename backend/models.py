@@ -45,3 +45,17 @@ class Recipe(db.Model):
     def update(self, title, description):
         self.title = title
         self.description = description
+
+        db.session.commit()
+
+class User(db.Model):
+    """
+    
+    """
+    id: "Mapped[int]" = mapped_column(primary_key=True)
+    username: "Mapped[str]" = mapped_column(unique=True)
+    email: "Mapped[str]" = mapped_column()
+    password: "Mapped[str]" = mapped_column(db.Text())
+
+    def __repr__(self):
+        return f"<User {self.username}>"
