@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_restx import Api, Resource, fields
 from config import DevConfig
-from models import Recipe
+from models import Recipe, User
 from exts import db
 from flask_migrate import Migrate
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.config.from_object(DevConfig)
@@ -26,10 +27,55 @@ recipe_model = api.model(
     }
 )
 
+signup_model = api.model(
+    "SignUp",
+    {
+        "username": fields.String(),
+        "email": fields.String(),
+        "password": fields.String(),
+    }
+)
+
 @api.route("/hello")
 class HelloResource(Resource):
     def get(self):
         return {"message": "hello"}
+
+
+@api.route("/signup")
+class SignUp(Resource):
+    @api.expect(signup_model)
+    def post(self):
+        data = request.get_json()
+        username = data.get("username")
+        user_exist: "bool" = db.session.execute(
+            db.select(User).filter_by(username=username)
+        ).scalars().first() != None
+        if user_exist:
+            return jsonify(
+                {
+                    "message": f"User {username} already exists"
+                }
+            )
+        new_user = User(
+            username = username,
+            email = data.get("email"),
+            password = generate_password_hash(data.get("password")),
+        )
+
+        new_user.save()
+        return jsonify(
+            {
+                "message": "User created successful"
+            }
+        )
+
+
+@api.route("/login")
+class Login(Resource):
+    def post(self):
+        pass
+
 
 @api.route("/recipes")
 class RecipesResource(Resource):

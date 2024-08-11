@@ -11,6 +11,7 @@
 - `api.model`: create JSON encoder with `api.model("<ORM>", {"<field1>": fields.<field1_type>, "<field2>": fields.<field2_type>})`
   - can set default value for field to replace `None`
 - `@api.marshal_with(<api.model>)` tell a method to marshal the return value to JSON with `api.model` just defined; same as `return marshal(<object>, <model>)`, can add response code along with the explicit way, `@api.marshal_list_with(<api.model>)` to marshal each element of the list returned
+- `@api.expect(<api.model>)` show example payload in docs
 ### `os.path.realpath(__file__)`
 - `os.path.realpath()` Get path of the linked file of a symbolic link
 - `__file__` Get current script's path
