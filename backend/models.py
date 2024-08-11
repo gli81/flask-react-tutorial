@@ -35,17 +35,59 @@ class Recipe(db.Model):
         return f"<Recipe {self.title}>"
 
     def save(self):
+        """
+        Insert a recipe
+        following SQLAlchemy documentation: db.session.add(instance)
+
+        Params
+        ----------
+            None
+        
+        Returns
+        ----------
+            None
+        """
         db.session.add(self)
         db.session.commit()
     
     def delete(self):
+        """
+        Delete a recipe
+        following SQLAlchemy documentation: db.session.delete(instance)
+
+        Params
+        ----------
+            None
+        
+        Returns
+        ----------
+            None
+        """
         db.session.delete(self)
         db.session.commit()
     
-    def update(self, title, description):
+    def update(
+        self,
+        title: "str",
+        description: "str"
+    ):
+        """
+        Update a recipe
+        following SQLAlchemy documentation: modify a instance corresponding to an entry
+
+        Params
+        ----------
+
+            title str: new title of the recipe
+
+            description str: new description of the recipe
+        
+        Returns
+        ----------
+            None
+        """
         self.title = title
         self.description = description
-
         db.session.commit()
 
 class User(db.Model):

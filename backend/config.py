@@ -1,16 +1,15 @@
 # -* - coding: utf-8 -*-
 
-from decouple import config
+from dotenv import load_dotenv
 import os
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
-print(BASE_DIR)
+load_dotenv()
+
+
 class Config:
-    SECRET_KEY = config("SECRET_KEY")
-    SQLALCHEMY_TRACK_MODIFICATIONS = config(
-        "SQLALCHEMY_TRACK_MODIFICATIONS",
-        cast=bool
-    )
+    SECRET_KEY = os.environ["SECRET_KEY"]
+    SQLALCHEMY_TRACK_MODIFICATIONS = bool(os.environ["SQLALCHEMY_TRACK_MODIFICATIONS"])
 
 class DevConfig(Config):
     SQLALCHEMY_DATABASE_URI = "sqlite:///" \

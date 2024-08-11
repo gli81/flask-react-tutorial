@@ -39,7 +39,7 @@ class RecipesResource(Resource):
         """
         Get all recipes
         """
-        recipes = Recipe.query.all()
+        recipes = db.session.execute(db.select(Recipe)).scalars().all()
         return recipes
 
     @api.marshal_with(recipe_model)
@@ -62,7 +62,7 @@ class RecipeResource(Resource):
         """
         Get a recipe by id
         """
-        recipe = Recipe.query.get_or_404(id)
+        recipe = db.get_or_404(Recipe, id)
         return recipe
 
     @api.marshal_with(recipe_model)
@@ -70,7 +70,7 @@ class RecipeResource(Resource):
         """
         Update a recipe by id
         """
-        recipe_to_update = Recipe.query.get_or_404(id)
+        recipe_to_update = db.get_or_404(Recipe, id)
         data = request.get_json()
         recipe_to_update.update(
             data.get("title"),
@@ -83,7 +83,7 @@ class RecipeResource(Resource):
         """
         Delete a recipe by id
         """
-        recipe_to_delete = Recipe.query.get_or_404(id)
+        recipe_to_delete = db.get_or_404(id)
         recipe_to_delete.delete()
         return recipe_to_delete
 
