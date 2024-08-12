@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from ..app import app, api
 from flask import request
-from flask_restx import Resource, fields
+from flask_restx import Resource, fields, Namespace
 from ..models.recipe import Recipe
 from ..exts import db
 from flask_jwt_extended import jwt_required
 
-
+recipe_ns = Namespace("Recipe", description="Namespace for recipes", path='')
 
 #model (serializer)
-recipe_model = api.model(
+recipe_model = recipe_ns.model(
     "Recipe",
     {
         "id": fields.Integer(),
@@ -20,20 +19,15 @@ recipe_model = api.model(
 )
 
 
-
-@api.route("/hello")
+@recipe_ns.route("/hello")
 class HelloResource(Resource):
     def get(self):
         return {"message": "hello"}
 
 
-
-
-
-@api.route("/recipes")
+@recipe_ns.route("/recipes")
 class RecipesResource(Resource):
-
-    @api.marshal_list_with(recipe_model)
+    @recipe_ns.marshal_list_with(recipe_model)
     def get(self):
         """
         Get all recipes
@@ -42,7 +36,7 @@ class RecipesResource(Resource):
         return recipes
 
     @jwt_required()
-    @api.marshal_with(recipe_model)
+    @recipe_ns.marshal_with(recipe_model)
     def post(self):
         """
         Create a new recipe
@@ -56,9 +50,9 @@ class RecipesResource(Resource):
         return new_recipe, 201
 
 
-@api.route("/recipe/<int:id>")
+@recipe_ns.route("/recipe/<int:id>")
 class RecipeResource(Resource):
-    @api.marshal_list_with(recipe_model)
+    @recipe_ns.marshal_list_with(recipe_model)
     def get(self, id):
         """
         Get a recipe by id
@@ -67,7 +61,7 @@ class RecipeResource(Resource):
         return recipe
 
     @jwt_required()
-    @api.marshal_with(recipe_model)
+    @recipe_ns.marshal_with(recipe_model)
     def put(self, id):
         """
         Update a recipe by id
@@ -81,7 +75,7 @@ class RecipeResource(Resource):
         return recipe_to_update
 
     @jwt_required()
-    @api.marshal_with(recipe_model)
+    @recipe_ns.marshal_with(recipe_model)
     def delete(self, id):
         """
         Delete a recipe by id
@@ -89,12 +83,3 @@ class RecipeResource(Resource):
         recipe_to_delete = db.get_or_404(id)
         recipe_to_delete.delete()
         return recipe_to_delete
-
-
-@app.shell_context_processor
-def make_shell_context():
-    return {
-        "db": db,
-        "Recipe": Recipe
-    }
-

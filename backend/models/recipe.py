@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from exts import db
+from ..exts import db
 from sqlalchemy.orm import Mapped, mapped_column
 
 

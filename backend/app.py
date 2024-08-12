@@ -1,21 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from flask import Flask
-from config import DevConfig
-from exts import db
-from flask_migrate import Migrate
-from flask_jwt_extended import JWTManager
-from flask_restx import Api
-from routes.auth import auth_ns
-
-app = Flask(__name__)
-app.config.from_object(DevConfig)
-db.init_app(app)
-migrate = Migrate(app, db)
-JWTManager(app) ## register app with JWT
-api = Api(app, doc="/docs")
-api.add_namespace(auth_ns, path='')
-
+from . import create_app
+from .config import DevConfig, TestConfig
 
 if __name__ == "__main__":
+    app = create_app(DevConfig)
     app.run()
