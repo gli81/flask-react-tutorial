@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from . import create_app
-from .config import DevConfig, TestConfig
+
+app = create_app("dev")
+
 
 if __name__ == "__main__":
-    app = create_app(DevConfig)
     app.run()

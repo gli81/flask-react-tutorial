@@ -9,10 +9,17 @@ from .routes.auth import auth_ns
 from .routes.recipe import recipe_ns
 from .models.recipe import Recipe
 from .models.user import User
+from .config import DevConfig, TestConfig
 
-def create_app(config):
+config_dict = {
+    "dev": DevConfig,
+    "test": TestConfig,
+}
+
+def create_app(conf: "str"="dev"):
     app = Flask(__name__)
-    app.config.from_object(config)
+    app.config.from_object(config_dict[conf])
+    # print(app.config)
     db.init_app(app)
     migrate = Migrate(app, db)
     JWTManager(app) ## register app with JWT

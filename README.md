@@ -4,6 +4,24 @@ tutorial: [Build a Full stack web app with Flask and ReactJS](https://www.youtub
 
 ## With RESTful Flask backend api
 
+To run the backend, run from backend directory
+
+```bash
+flask run --debug --reload
+```
+
+or run from the root folder either
+
+```bash
+flask --app backend.app run --debug --reload
+```
+
+or
+
+```bash
+python -m backend.app
+```
+
 ## With React.js frontend
 
 ## Database: SQLite

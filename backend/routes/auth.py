@@ -11,7 +11,7 @@ from flask_jwt_extended import create_access_token, create_refresh_token
 auth_ns = Namespace(
     "Authentication",
     description="Namespace for authentication",
-    path=''
+    path='/'
 )
 
 signup_model = auth_ns.model(
@@ -44,7 +44,7 @@ class SignUp(Resource):
         if user_exist:
             return jsonify(
                 {
-                    "message": f"User {username} already exists"
+                    "msg": f"User {username} already exists"
                 }
             )
         new_user = User(
@@ -56,7 +56,7 @@ class SignUp(Resource):
         new_user.save()
         return jsonify(
             {
-                "message": "User created successful"
+                "msg": "User created successful"
             }
         )
 
@@ -82,7 +82,7 @@ class Login(Resource):
                 )
                 return jsonify(
                     {
-                        "message": "Login successful",
+                        "msg": "Login successful",
                         "access_token": access_token,
                         "refresh_token": refresh_token
                     }
@@ -95,5 +95,5 @@ class Login(Resource):
                 )
         else:
             return jsonify(
-                {"message": "Invalid username"}
+                {"msg": "Invalid username"}
             )

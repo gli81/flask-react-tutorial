@@ -6,7 +6,10 @@ from ..models.recipe import Recipe
 from ..exts import db
 from flask_jwt_extended import jwt_required
 
-recipe_ns = Namespace("Recipe", description="Namespace for recipes", path='')
+recipe_ns = Namespace(
+    "Recipe",
+    description="Namespace for recipes",
+    path='/')
 
 #model (serializer)
 recipe_model = recipe_ns.model(

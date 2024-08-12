@@ -4,12 +4,13 @@ from dotenv import load_dotenv
 import os
 
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
-load_dotenv()
+load_dotenv(BASE_DIR+"/.env")
 
 
 class Config:
     SECRET_KEY = os.environ["SECRET_KEY"]
     SQLALCHEMY_TRACK_MODIFICATIONS = bool(os.environ["SQLALCHEMY_TRACK_MODIFICATIONS"])
+
 
 class DevConfig(Config):
     SQLALCHEMY_DATABASE_URI = "sqlite:///" \
@@ -17,8 +18,10 @@ class DevConfig(Config):
     DEBUG = True
     SQLALCHEMY_ECHO = True
 
+
 class ProdConfig(Config):
     pass
+
 
 class TestConfig(Config):
     pass
