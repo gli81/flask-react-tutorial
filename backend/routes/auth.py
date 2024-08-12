@@ -1,18 +1,16 @@
 # -*- coding: utf-8 -*-
 
-from backend.app import api, app
-from flask_restx import fields, Resource, Blueprint
+from flask_restx import fields, Resource, Namespace
 from flask import request, jsonify
 from backend.models.user import User
 from backend.exts import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, create_refresh_token
 
-## use Blueprint
-user_bp = Blueprint("user_bp", __name__)
-app.register_blueprint(user_bp, url_prefix="")
+## use Namespace
+auth_ns = Namespace("auth", description="ns for auth")
 
-signup_model = api.model(
+signup_model = auth_ns.model(
     "SignUp",
     {
         "username": fields.String(),
@@ -21,7 +19,7 @@ signup_model = api.model(
     }
 )
 
-login_model = api.model(
+login_model = auth_ns.model(
     "Login",
     {
         "username": fields.String(),
@@ -30,9 +28,9 @@ login_model = api.model(
 )
 
 
-@user_bp.route("/signup")
+@auth_ns.route("/signup")
 class SignUp(Resource):
-    @api.expect(signup_model)
+    @auth_ns.expect(signup_model)
     def post(self):
         data = request.get_json()
         username = data.get("username")
@@ -59,9 +57,9 @@ class SignUp(Resource):
         )
 
 
-@user_bp.route("/login")
+@auth_ns.route("/login")
 class Login(Resource):
-    @api.expect(login_model)
+    @auth_ns.expect(login_model)
     def post(self):
         data = request.get_json()
         usrnm = data.get("username")
