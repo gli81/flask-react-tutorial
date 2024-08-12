@@ -30,4 +30,9 @@
 - `flask routes`: list all the routes defined in the app
 - `flask db`: manages database migration using flask-migrate
 - `flask test`: runs unit tests for app
+### JWT: gives token for access and refresh
+  - `flask_jwt_extended` package
+    - `JWT_Manager` to attach to app
+    - `create_access_token()` to create an access token, `create_refresh_token()` to create a refresh token
+    - `@require_jwt()` to make a route require token for access
 ## React Frontend

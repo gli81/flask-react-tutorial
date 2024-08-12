@@ -1,21 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from flask import Flask, request, jsonify
-from flask_restx import Api, Resource, fields
-from config import DevConfig
-from models import Recipe, User
-from exts import db
-from flask_migrate import Migrate
-from werkzeug.security import generate_password_hash, check_password_hash
+from ..app import app, api
+from flask import request
+from flask_restx import Resource, fields
+from ..models.recipe import Recipe
+from ..exts import db
+from flask_jwt_extended import jwt_required
 
-app = Flask(__name__)
-app.config.from_object(DevConfig)
 
-db.init_app(app)
-
-migrate = Migrate(app, db)
-
-api = Api(app, doc="/docs")
 
 #model (serializer)
 recipe_model = api.model(
@@ -27,14 +19,7 @@ recipe_model = api.model(
     }
 )
 
-signup_model = api.model(
-    "SignUp",
-    {
-        "username": fields.String(),
-        "email": fields.String(),
-        "password": fields.String(),
-    }
-)
+
 
 @api.route("/hello")
 class HelloResource(Resource):
@@ -42,39 +27,7 @@ class HelloResource(Resource):
         return {"message": "hello"}
 
 
-@api.route("/signup")
-class SignUp(Resource):
-    @api.expect(signup_model)
-    def post(self):
-        data = request.get_json()
-        username = data.get("username")
-        user_exist: "bool" = db.session.execute(
-            db.select(User).filter_by(username=username)
-        ).scalars().first() != None
-        if user_exist:
-            return jsonify(
-                {
-                    "message": f"User {username} already exists"
-                }
-            )
-        new_user = User(
-            username = username,
-            email = data.get("email"),
-            password = generate_password_hash(data.get("password")),
-        )
 
-        new_user.save()
-        return jsonify(
-            {
-                "message": "User created successful"
-            }
-        )
-
-
-@api.route("/login")
-class Login(Resource):
-    def post(self):
-        pass
 
 
 @api.route("/recipes")
@@ -88,6 +41,7 @@ class RecipesResource(Resource):
         recipes = db.session.execute(db.select(Recipe)).scalars().all()
         return recipes
 
+    @jwt_required()
     @api.marshal_with(recipe_model)
     def post(self):
         """
@@ -101,6 +55,7 @@ class RecipesResource(Resource):
         new_recipe.save()
         return new_recipe, 201
 
+
 @api.route("/recipe/<int:id>")
 class RecipeResource(Resource):
     @api.marshal_list_with(recipe_model)
@@ -111,6 +66,7 @@ class RecipeResource(Resource):
         recipe = db.get_or_404(Recipe, id)
         return recipe
 
+    @jwt_required()
     @api.marshal_with(recipe_model)
     def put(self, id):
         """
@@ -124,6 +80,7 @@ class RecipeResource(Resource):
         )
         return recipe_to_update
 
+    @jwt_required()
     @api.marshal_with(recipe_model)
     def delete(self, id):
         """
@@ -141,6 +98,3 @@ def make_shell_context():
         "Recipe": Recipe
     }
 
-
-if __name__ == "__main__":
-    app.run()
