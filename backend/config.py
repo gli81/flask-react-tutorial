@@ -14,7 +14,9 @@ class Config:
     https://www.sitepoint.com/community/t/flask-python-config-py-not-working/402482
     """
     SECRET_KEY = os.environ["SECRET_KEY"]
-    SQLALCHEMY_TRACK_MODIFICATIONS = bool(os.environ["SQLALCHEMY_TRACK_MODIFICATIONS"])
+    SQLALCHEMY_TRACK_MODIFICATIONS = bool(
+        os.environ["SQLALCHEMY_TRACK_MODIFICATIONS"]
+    )
 
 
 class DevConfig(Config):
@@ -29,4 +31,7 @@ class ProdConfig(Config):
 
 
 class TestConfig(Config):
-    pass
+    SQLALCHEMY_DATABASE_URI = "sqlite:///" \
+        + os.path.join(BASE_DIR, "test.db")
+    SQLALCHEMY_ECHO = False
+    TESTING = True
