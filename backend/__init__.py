@@ -11,6 +11,7 @@ from .models.recipe import Recipe
 from .models.user import User
 from .config import DevConfig, TestConfig, ProdConfig
 import os
+from flask_cors import CORS 
 
 config_dict = {
     "dev": DevConfig,
@@ -25,6 +26,7 @@ def create_app(conf: "str"="dev"):
         os.environ['FLASK_DEBUG'] = "True"
     app = Flask(__name__)
     app.config.from_object(config_dict[conf])
+    CORS(app)
     # print(app.config)
     db.init_app(app)
     migrate = Migrate(app, db)
