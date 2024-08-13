@@ -7,13 +7,13 @@ tutorial: [Build a Full stack web app with Flask and ReactJS](https://www.youtub
 To run the backend, run from backend directory
 
 ```bash
-flask run --debug --reload
+flask run
 ```
 
 or run from the root folder either
 
 ```bash
-flask --app backend.app run --debug --reload
+flask --app backend run
 ```
 
 or
@@ -23,5 +23,11 @@ python -m backend.app
 ```
 
 ## With React.js frontend
+
+To run frontend, run from frontend directory
+
+```bash
+npm run dev
+```
 
 ## Database: SQLite
