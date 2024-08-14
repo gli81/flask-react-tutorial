@@ -9,9 +9,7 @@ load_dotenv(BASE_DIR+"/.env")
 
 class Config:
     """
-    regarding configs (mostly DEBUG) not properly loaded
-    https://stackoverflow.com/questions/52451154/flask-app-not-using-config-file-settings-properly
-    https://www.sitepoint.com/community/t/flask-python-config-py-not-working/402482
+    Basic flask configurations
     """
     SECRET_KEY = os.environ["SECRET_KEY"]
     SQLALCHEMY_TRACK_MODIFICATIONS = bool(

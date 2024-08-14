@@ -3,6 +3,10 @@
 ### Flask config
 - `SQLALCHEMY_TRACK_MODIFICATIONS`
 - `SQLALCHEMY_ECHO`
+- `DEBUG`: setting this config in code (i.e. `config.py`) is not working
+  - https://stackoverflow.com/questions/52451154/flask-app-not-using-config-file-settings-properly
+  - https://www.sitepoint.com/community/t/flask-python-config-py-not-working/402482
+  - solved this by setting environment variable if development mode when creating app
 ### `python_decouple`: to read `.env` file, I will switch to dotenv
 - with `python-dotenv`, `load_env()` first, then get attributes with `os.environ["<attribute>"]`
 ### `flask_restx` and `Api`, `Resource`
@@ -29,12 +33,57 @@
 ### `flask` shell commands
 - `flask shell`: launches an interactive Python shell with all flask application context loaded, can do SQLAlchemy queries here
 - `flask run`: starts a development server
+  - if run from project folder, flask looks for `create_app()` function, and treat the entire folder as a package
+  - if run from parent folder, set `--app` flag, flask goes into the designated package and looks for `create_app()` and run
 - `flask routes`: list all the routes defined in the app
 - `flask db`: manages database migration using flask-migrate
-- `flask test`: runs unit tests for app
 ### JWT: gives token for access and refresh
   - `flask_jwt_extended` package
     - `JWT_Manager` to attach to app
     - `create_access_token()` to create an access token, `create_refresh_token()` to create a refresh token
     - `@require_jwt()` to make a route require token for access
+### unit test with `unittest`
+### unit test with `pytest`
+- most widely used unit test framework
+### CORS
+  - ?????what is CORS?????
+  - import `CORS` from `flask_cors`, and register app with `CORS` by `CORS(app)`
 ## React Frontend
+### main entry point
+- `main.jsx` and `index.html`
+### components
+- function based: each function is a component, of course these functions return html tags
+- `export default <component_name>`
+- import in other files, and use `<component_name />`
+- 要return多个component要用空<></>包起来因为只允许返回一个tag但可以有多个子tag
+- js code wrapped with `{}`
+- props: passed to components as parameters
+  - pass key=value to a component `<component_name <key1>=<value1> />`
+  - for value passed in, string literal all other type variables wrapped with `{}`
+  - to retrive boolean, use ternary operator
+  - PropTypes
+    - check value passed in is expected type
+    - `<component>.propTypes = {<key1>: PropTypes.<type1>,}`
+    - only gives warning, won't crash program
+  - `defaultProps`, a separate struct specifing default values for each field
+### vite
+- to start: `npm create vite@latest <app_name>`, install dependencies `npm i`
+- to run development server: `npm run dev`
+- set proxy
+  - in `vite.config.js`
+    ```js
+    export default defineConfig({
+      plugins: [react()],
+      server: {
+        proxy: {
+          "/api": {
+            target:"<backend_url>",
+            changeOrigin: true,
+            rewrite: (p) => p.replace(/^\/api/, '')
+          }
+        }
+      }
+    }) // takes every request start with /api, remove the api part and send to backend
+    ```
+### `UseEffect()`
+### `UseState()`

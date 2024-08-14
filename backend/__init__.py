@@ -20,6 +20,9 @@ config_dict = {
 }
 
 def create_app(conf: "str"="dev"):
+    """
+    factory function to create app
+    """
     if conf not in config_dict:
         conf = "dev"
     if conf in ["dev",]:
