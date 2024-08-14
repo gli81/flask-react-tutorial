@@ -66,6 +66,11 @@
     - `<component>.propTypes = {<key1>: PropTypes.<type1>,}`
     - only gives warning, won't crash program
   - `defaultProps`, a separate struct specifing default values for each field
+- rendering list
+  - `<variable>.map(<function>)` function to convert everything into `<li>{}</li>`
+  - React expect each `<li></li>` to have different keys, can set them to one of the attributes
+  - sort with `<variable>.sort()`
+  - filter with `<variable>.filter()`
 ### vite
 - to start: `npm create vite@latest <app_name>`, install dependencies `npm i`
 - to run development server: `npm run dev`

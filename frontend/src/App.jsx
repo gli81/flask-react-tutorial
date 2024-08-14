@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from "react"
 
 function App() {
   useEffect(
@@ -13,7 +13,7 @@ function App() {
   const [message, setMessage] = useState('');
 
   return (
-    <div className='app'>
+    <div className="app">
         <h1>{message}</h1>
     </div>
   )
