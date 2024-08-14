@@ -45,6 +45,9 @@
 ### unit test with `unittest`
 ### unit test with `pytest`
 - most widely used unit test framework
+- define functions that start with `test_`, test with `assert` statements
+- fixtures `@pytest.fixture()`
+  - 
 ### CORS
   - ?????what is CORS?????
   - import `CORS` from `flask_cors`, and register app with `CORS` by `CORS(app)`
@@ -84,11 +87,14 @@
 - call setter function multiple times with in one event handler, the last one will work, others won't
 - use updater function when try to call the same setter function multiple times in one handler: pass an arrow function to setter function, by convention don't use the original variable name `setCount(c => c + 1);`
 - best practice: also use updater function even only call setter function once
-- if state is an object: use spread operator `{}...<original_object>, <param>: <new_value>}`, set two same key will result in the latter one being effective, when use updater function, setting new value by `<original_object>.<param>=event.target.value` is not working
+- if state is an object: use spread operator `{...<original_object>, <param>: <new_value>}`, set two same key will result in the latter one being effective, when use updater function, setting new value by `<original_object>.<param>=event.target.value` is not working
 - if state is an array
   - use `id` attribute and `document.getElementById().value` to get new element, reset `document.getElementById().value` to empty then spread current state with spread operator, adding the new one
   - to remove, pass `key` attribute to handler, then remove with `filter()` function
-### `UseEffect()`
+### `UseEffect()` hook
+- two parameters, one callback function that will be executed upon changes in dependency list, one dependency list
+  - if no dependency list, run on every change on the component; empty dependency list, run only when the component loads; have something in the list, run when these components or values or states change
+  - callback funtion can return a function, it will be run ?????when the component unmounted?????
 ### vite
 - to start: `npm create vite@latest <app_name>`, install dependencies `npm i`
 - to run development server: `npm run dev`

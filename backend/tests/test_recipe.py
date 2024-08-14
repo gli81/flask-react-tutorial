@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import pytest
-from .. import create_app
-from ..exts import db
+from ..src import create_app
+from ..src.exts import db
 
 @pytest.fixture()
 def app():
