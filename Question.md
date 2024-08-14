@@ -71,6 +71,24 @@
   - React expect each `<li></li>` to have different keys, can set them to one of the attributes
   - sort with `<variable>.sort()`
   - filter with `<variable>.filter()`
+- onClick
+  - have a function in there
+    - if the function have parameters, it will be triggered without click, so do `() => <function>(<param1>)`
+    - ?????event?????: basically an object detailing the click
+    - `onDoubleClick` attribute of button
+- onChange
+  - for `<input>`, `<textarea>`, `<select>`, `<radio>`...
+  - provide an event typically, detailing the change, have a function that handles the change with that event being parameter
+### `UseState()` hook
+- two return value, a variable and a setter of that variable, one parameter the initial value `const [<variable>, <setter>] = useState(<initial>);`
+- call setter function multiple times with in one event handler, the last one will work, others won't
+- use updater function when try to call the same setter function multiple times in one handler: pass an arrow function to setter function, by convention don't use the original variable name `setCount(c => c + 1);`
+- best practice: also use updater function even only call setter function once
+- if state is an object: use spread operator `{}...<original_object>, <param>: <new_value>}`, set two same key will result in the latter one being effective, when use updater function, setting new value by `<original_object>.<param>=event.target.value` is not working
+- if state is an array
+  - use `id` attribute and `document.getElementById().value` to get new element, reset `document.getElementById().value` to empty then spread current state with spread operator, adding the new one
+  - to remove, pass `key` attribute to handler, then remove with `filter()` function
+### `UseEffect()`
 ### vite
 - to start: `npm create vite@latest <app_name>`, install dependencies `npm i`
 - to run development server: `npm run dev`
@@ -90,5 +108,3 @@
       }
     }) // takes every request start with /api, remove the api part and send to backend
     ```
-### `UseEffect()`
-### `UseState()`
