@@ -3,7 +3,7 @@
 from flask import request
 from flask_restx import Resource, fields, Namespace
 from ..models.recipe import Recipe
-from ..exts import db
+from .. import db
 from flask_jwt_extended import jwt_required
 
 recipe_ns = Namespace(

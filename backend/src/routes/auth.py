@@ -3,7 +3,7 @@
 from flask_restx import fields, Resource, Namespace
 from flask import request, jsonify, make_response
 from ..models.user import User
-from ..exts import db
+from .. import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import (
     create_access_token,
