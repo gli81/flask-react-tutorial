@@ -47,7 +47,7 @@
 - most widely used unit test framework
 - define functions that start with `test_` or end with `_test.py`, test with `assert` statements
 - fixtures `@pytest.fixture()`
-  - functions with `@pytest.fixture()` decorator are treated as fixtures, a fixture is a global variable that can be used by other test functions, the name of the fixture is the name of the function, the value of the fixture is the return value of the fixture
+  - functions with `@pytest.fixture()` decorator are treated as fixtures, a fixture is a global variable that can be used by other test functions, the name of the fixture is the name of the function, the value of the fixture is the return value of the fixture or the yielded value if a generator function (for a fixture function, the generator can yield only one item, error if more than that)
   - in a test function, if there is a parameter, it will look for fixtures that match that has function name that matches that parameter name
 ### CORS
   - ?????what is CORS?????
@@ -83,7 +83,7 @@
 - onChange
   - for `<input>`, `<textarea>`, `<select>`, `<radio>`...
   - provide an event typically, detailing the change, have a function that handles the change with that event being parameter
-### `UseState()` hook
+### `useState()` hook
 - two return value, a variable and a setter of that variable, one parameter the initial value `const [<variable>, <setter>] = useState(<initial>);`
 - call setter function multiple times with in one event handler, the last one will work, others won't
 - use updater function when try to call the same setter function multiple times in one handler: pass an arrow function to setter function, by convention don't use the original variable name `setCount(c => c + 1);`
@@ -92,10 +92,20 @@
 - if state is an array
   - use `id` attribute and `document.getElementById().value` to get new element, reset `document.getElementById().value` to empty then spread current state with spread operator, adding the new one
   - to remove, pass `key` attribute to handler, then remove with `filter()` function
-### `UseEffect()` hook
+### `useEffect()` hook
 - two parameters, one callback function that will be executed upon changes in dependency list, one dependency list
   - if no dependency list, run on every change on the component; empty dependency list, run only when the component loads; have something in the list, run when these components or values or states change
   - callback funtion can return a function, it will be run ?????when the component unmounted?????
+### `useContext()` hook
+- share variable between nested components, replace passing props through each level (props drilling)
+- provider component
+  - import `createContext`, make a new context with `createContext()` and export it with `export default`, when return, wrap the child component with `<<context>.Provider value={variable}>` tag (so only sharing variable from parent component to children component)
+- consumer component
+  - can have more than one consumer for each provider
+  - import `useContext`, make a new variable and fill the variable with `useContext(<conext>)`
+### `useRef()` hook
+- `useRef(<initial_value>)` returns an object with one `current` property, when change the current value, not re-rendering the page
+- set some tags of the component to be the ref: add `ref={<ref_variable>}` to the html tag
 ### vite
 - to start: `npm create vite@latest <app_name>`, install dependencies `npm i`
 - to run development server: `npm run dev`
@@ -115,3 +125,4 @@
       }
     }) // takes every request start with /api, remove the api part and send to backend
     ```
+### react-router-dom
