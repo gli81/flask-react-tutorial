@@ -45,9 +45,10 @@
 ### unit test with `unittest`
 ### unit test with `pytest`
 - most widely used unit test framework
-- define functions that start with `test_`, test with `assert` statements
+- define functions that start with `test_` or end with `_test.py`, test with `assert` statements
 - fixtures `@pytest.fixture()`
-  - 
+  - functions with `@pytest.fixture()` decorator are treated as fixtures, a fixture is a global variable that can be used by other test functions, the name of the fixture is the name of the function, the value of the fixture is the return value of the fixture
+  - in a test function, if there is a parameter, it will look for fixtures that match that has function name that matches that parameter name
 ### CORS
   - ?????what is CORS?????
   - import `CORS` from `flask_cors`, and register app with `CORS` by `CORS(app)`
