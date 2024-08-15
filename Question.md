@@ -126,3 +126,6 @@
     }) // takes every request start with /api, remove the api part and send to backend
     ```
 ### react-router-dom
+
+## Gin backend
+### project structure

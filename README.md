@@ -13,7 +13,7 @@ flask run
 or run from the root folder either
 
 ```bash
-flask --app backend run
+flask --app backend.src run
 ```
 
 or
@@ -31,3 +31,11 @@ npm run dev
 ```
 
 ## Database: SQLite
+
+## With RESTful Gin backend api
+
+To run the gin backend, run from goserver directory
+
+```bash
+go run main.go
+```
