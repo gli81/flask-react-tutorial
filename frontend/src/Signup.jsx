@@ -70,13 +70,13 @@ function Signup() {
                         />
                     </Form.Group>
                     {
-                        errors.username?.type == "required" &&
+                        errors.username?.type === "required" &&
                         <p style={{ color: "red" }}>
                             <small>Username is required</small>
                         </p>
                     }
                     {
-                        errors.username?.type == "maxLength" &&
+                        errors.username?.type === "maxLength" &&
                         <p style={{ color: "red" }}>
                             <small>Max length for username is 25</small>
                         </p>
