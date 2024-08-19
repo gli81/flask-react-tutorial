@@ -2,14 +2,14 @@ import {useState, useEffect} from "react";
 import {Form, Button} from "react-bootstrap";
 import {Link} from "react-router-dom"
 import { useForm } from "react-hook-form";
-// import { login } from "../auth";
-// import {useHistory} from "react-router-dom"
+import { login } from "./auth";
+import {useNavigate} from "react-router";
 
 function Login() {
     // const [username, setUsername] = useState('');
     // const [password, setPassword] = useState('');
     const {register, handleSubmit, watch, reset, formState: {errors}} = useForm();
-    // const hist = useHistory();
+    const hist = useNavigate();
     function login_(data) {
         const requestOptions = {
             method: "POST",
@@ -24,11 +24,12 @@ function Login() {
         )
         .then(res => res.json())
         .then(d => {
-            console.log(d.access_token);
-            // login(d.access_token);
+            // console.log(d.access_token);
+            login(d.access_token);
         })
         .catch(err => console.log(err))
         reset();
+        hist("/")
     };
     return (
         <div className="container">
@@ -72,7 +73,6 @@ function Login() {
                                             "password",
                                             {
                                                 required: true,
-                                                minLength: 8
                                             }
                                         )
                                     }

@@ -2,10 +2,11 @@
 
 import { createAuthProvider } from "react-token-auth";
 
-export const [useAuth, authFetch, login, logout] = 
+export const {useAuth, authFetch, login, logout} = 
     createAuthProvider(
         {
-            accessTokenKey: "access_token",
+            getAccessToken: session => session.access_token,
+            storage: localStorage,
             onUpdateToken: (token) => fetch(
                 "/api/refresh",
                 {
