@@ -1,6 +1,6 @@
 import {Router} from "oh-router";
-import Login from "./Login";
 import Home from "./Home";
+import Login from "./Login";
 import Signup from "./Signup";
 import CreateRecipe from "./CreateRecipe";
 import { LoginCheckMiddleware } from "./middlewares/loginCheck";

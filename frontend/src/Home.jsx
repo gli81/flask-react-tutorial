@@ -3,7 +3,8 @@ import {useEffect, useState} from "react";
 // import {useAuth} from "./auth.jsx";
 import Recipe from "./Recipe.jsx";
 import { Button } from "react-bootstrap";
-import { router } from "./router.jsx";
+// import { router } from "./router.jsx";
+import {handleSignup} from "./util/handleAcct.js"
 
 function LoggedInHome() {
     const [recipes, setRecipes] = useState([]);
@@ -35,13 +36,11 @@ function LoggedInHome() {
 }
 
 function LoggedOutHome() {
-    const handleSignin = () => {
-        router.navigate("/signup");
-    }
+   
     return (
         <div className="home container">
             <h1 className="heading">Welcome</h1>
-            <Button variant="primary" onClick={() => handleSignin()}>
+            <Button variant="primary" onClick={() => handleSignup()}>
                 sign up
             </Button>
         </div>
