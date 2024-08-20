@@ -3,13 +3,13 @@ import {Form, Button} from "react-bootstrap";
 import {Link} from "react-router-dom"
 import { useForm } from "react-hook-form";
 import { login } from "./auth";
-import {useNavigate} from "react-router";
+// import {useNavigate} from "react-router";
 
 function Login() {
     // const [username, setUsername] = useState('');
     // const [password, setPassword] = useState('');
     const {register, handleSubmit, watch, reset, formState: {errors}} = useForm();
-    const hist = useNavigate();
+    // const hist = useNavigate();
     function login_(data) {
         const requestOptions = {
             method: "POST",
@@ -29,7 +29,7 @@ function Login() {
         })
         .catch(err => console.log(err))
         reset();
-        hist("/")
+        // hist("/")
     };
     return (
         <div className="container">

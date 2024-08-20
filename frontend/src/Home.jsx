@@ -1,7 +1,9 @@
 import {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
-import {useAuth} from "./auth.jsx";
+// import {Link} from "react-router-dom";
+// import {useAuth} from "./auth.jsx";
 import Recipe from "./Recipe.jsx";
+import { Button } from "react-bootstrap";
+import { router } from "./router.jsx";
 
 function LoggedInHome() {
     const [recipes, setRecipes] = useState([]);
@@ -33,18 +35,26 @@ function LoggedInHome() {
 }
 
 function LoggedOutHome() {
+    const handleSignin = () => {
+        router.navigate("/signup");
+    }
     return (
         <div className="home container">
             <h1 className="heading">Welcome</h1>
-            <Link to="/signup" className="btn btn-primary btn-lg">Get Start</Link>
+            <Button variant="primary" onClick={() => handleSignin()}>
+                sign up
+            </Button>
         </div>
     )
 }
 
 function Home() {
-    const [logged] = useAuth();
+    // const [logged] = useAuth();
     return (
-        <>{logged ? <LoggedInHome /> : <LoggedOutHome />}</>
-    );
+        <LoggedOutHome />
+    )
+    // return (
+    //     <>{logged ? <LoggedInHome /> : <LoggedOutHome />}</>
+    // );
 }
 export default Home;
