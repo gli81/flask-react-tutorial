@@ -90,7 +90,7 @@
 - best practice: also use updater function even only call setter function once
 - if state is an object: use spread operator `{...<original_object>, <param>: <new_value>}`, set two same key will result in the latter one being effective, when use updater function, setting new value by `<original_object>.<param>=event.target.value` is not working
 - if state is an array
-  - use `id` attribute and `document.getElementById().value` to get new element, reset `document.getElementById().value` to empty then spread current state with spread operator, adding the new one
+  - to add input to the array: use `id` attribute and `document.getElementById().value` to get new element, reset `document.getElementById().value` to empty then spread current state with spread operator, adding the new one
   - to remove, pass `key` attribute to handler, then remove with `filter()` function
 ### `useEffect()` hook
 - two parameters, one callback function that will be executed upon changes in dependency list, one dependency list
