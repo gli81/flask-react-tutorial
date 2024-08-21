@@ -1,9 +1,13 @@
+import { Card } from "react-bootstrap";
+
 const Recipe = (props) => {
     return(
-        <div className="recipe">
-            <h3>{props.title}</h3>
-            <p>{props.description}</p>
-        </div>
+        <Card className="recipe">
+            <Card.Body>
+                <Card.Title>{props.title}</Card.Title>
+                <p>{props.description}</p>
+            </Card.Body>
+        </Card>
     )
 }
 

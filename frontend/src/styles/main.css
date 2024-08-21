@@ -8,6 +8,7 @@
     margin:auto;
     width: 80%;
 }
-/* .recipe{
+.recipe{
     margin-top:20px;
-} */
+    font-weight: 300;
+}

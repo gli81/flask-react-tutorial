@@ -16,7 +16,7 @@ function LoggedInHome() {
         }, [] // only load when first rendering
     );
     return (
-        <div className="recipes">
+        <div className="home container">
             <h1>List</h1>
             <>{recipes.map(
                 recipe => {
