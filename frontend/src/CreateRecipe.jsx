@@ -1,8 +1,10 @@
 import { Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 function CreateRecipe() {
     const {register, handleSubmit, reset, formState: {errors}} = useForm();
+    const hist = useNavigate();
     function createRecipe(data) {
         const token = localStorage.getItem("REACT_TOKEN_AUTH_KEY");
         const reqOp = {
@@ -17,11 +19,9 @@ function CreateRecipe() {
             "/api/recipes",
             reqOp
         )
-        .then(res => res.json())
-        .then(data => console.log(data))
+        .then(() => {reset();})
         .catch(err => console.log(err));
-        
-        reset();
+        hist("/");
     }
     return (
         <div className="container">

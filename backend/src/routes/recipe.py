@@ -83,6 +83,6 @@ class RecipeResource(Resource):
         """
         Delete a recipe by id
         """
-        recipe_to_delete = db.get_or_404(id)
+        recipe_to_delete = db.get_or_404(Recipe, id)
         recipe_to_delete.delete()
         return recipe_to_delete

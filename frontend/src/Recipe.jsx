@@ -1,4 +1,4 @@
-import { Card } from "react-bootstrap";
+import { Card, Modal, Button } from "react-bootstrap";
 
 const Recipe = (props) => {
     return(
@@ -6,6 +6,18 @@ const Recipe = (props) => {
             <Card.Body>
                 <Card.Title>{props.title}</Card.Title>
                 <p>{props.description}</p>
+                <Button
+                    variant="primary"
+                    onClick={props.onClick}
+                >
+                    Update
+                </Button>
+                <Button
+                    variant="danger"
+                    onClick={props.onDelete}
+                >
+                    Delete
+                </Button>
             </Card.Body>
         </Card>
     )
