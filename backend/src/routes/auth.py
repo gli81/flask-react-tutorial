@@ -49,6 +49,7 @@ class SignUp(Resource):
         if user_exist:
             return jsonify(
                 {
+                    "code": -1,
                     "msg": f"User {username} already exists"
                 }
             )
@@ -62,6 +63,7 @@ class SignUp(Resource):
         return make_response(
             jsonify(
                 {
+                    "code": 0,
                     "msg": "User created successful"
                 }
             ),
@@ -90,20 +92,27 @@ class Login(Resource):
                 )
                 return jsonify(
                     {
+                        "code": 0,
                         "msg": "Login successful",
-                        "access_token": access_token,
-                        "refresh_token": refresh_token
+                        "data": {
+                            "access_token": access_token,
+                            "refresh_token": refresh_token
+                        }
                     }
                 )
             else:
                 return jsonify(
                     {
+                        "code": -1,
                         "msg": "Invalid password"
                     }
                 )
         else:
             return jsonify(
-                {"msg": "Invalid username"}
+                {
+                    "code": -1,
+                    "msg": "Invalid username"
+                }
             )
 
 
@@ -116,7 +125,11 @@ class Refresh(Resource):
         return make_response(
             jsonify(
                 {
-                    "access_token": new_access_token
+                    "code": 0,
+                    "msg": "Refresh successful",
+                    "data": {
+                        "access_token": new_access_token
+                    }
                 }
             ),
             200

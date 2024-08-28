@@ -24,12 +24,15 @@ export default function Login() {
             })
         })
         .then(res => res.json())
-        .then(data => {
-            console.log(data);
-            setToken("_access", data.access_token);
-            setToken("_refresh", data.refresh_token);
-        });
-        router.navigate("/");
+        .then(d => {
+            console.log(d);
+            if (d.code === 0) {
+                setToken("_access", d.access_token);
+                setToken("_refresh", d.refresh_token);
+                router.navigate("/");
+            }
+        })
+        .catch(err => console.error(err));   
     }
     return (
         <div>
