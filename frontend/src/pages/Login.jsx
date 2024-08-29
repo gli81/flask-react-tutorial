@@ -7,7 +7,7 @@ export default function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
-    async function onsubmit() {
+    async function onSubmit() {
         await fetch("/api/login", {
             method: "POST",
             headers: {
@@ -25,14 +25,26 @@ export default function Login() {
         })
         .then(res => res.json())
         .then(d => {
-            console.log(d);
+            console.log(d.msg);
             if (d.code === 0) {
                 setToken("_access", d.access_token);
                 setToken("_refresh", d.refresh_token);
                 router.navigate("/");
+            } else {
+                switch (d.msg) {
+                    case "Invalid username":
+                        setUsername("");
+                        setPassword("");
+                        break;
+                    case "Invalid password":
+                        setPassword("");
+                        break;
+                    default:
+                        alert("Unknown error");
+                }
             }
         })
-        .catch(err => console.error(err));   
+        .catch(err => console.error(err));
     }
     return (
         <div>
@@ -50,7 +62,7 @@ export default function Login() {
             <Button
                 loading={loading}
                 type="primary"
-                block onClick={onsubmit}
+                block onClick={onSubmit}
             >
                 Login
             </Button>

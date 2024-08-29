@@ -1,10 +1,10 @@
 
-export function getToken() {
-    return localStorage.getItem("_auth");
+export function getToken(name) {
+    return localStorage.getItem(name);
 }
 export function setToken(name, token) {
     localStorage.setItem(name, token);
 }
-export function rmToken() {
-    localStorage.removeItem("_auth");
+export function rmToken(name) {
+    localStorage.removeItem(name);
 }

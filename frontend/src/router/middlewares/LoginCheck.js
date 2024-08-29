@@ -7,7 +7,7 @@ export class LoginCheckMiddleware extends Middleware {
     async handler(
         ctx, next
     ) {
-        const token = getToken();
+        const token = getToken("_access");
         if (ctx.to.pathname === "/login") {
             if (token) {
                 router.navigate("/");

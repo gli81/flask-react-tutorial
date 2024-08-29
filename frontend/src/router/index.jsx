@@ -13,8 +13,12 @@ export const router = new Router({
         },
         {
             path: "/",
-            redirect: "user-manage"
+            element: <div>Home</div>
         },
+        // {
+        //     path: "/",
+        //     redirect: "user-manage"
+        // },
         {
             path: "/book-manage",
             element: <Book />
