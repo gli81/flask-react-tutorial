@@ -7,6 +7,7 @@ export default function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState("");
     async function onSubmit() {
         await fetch("/api/login", {
             method: "POST",
@@ -25,12 +26,14 @@ export default function Login() {
         })
         .then(res => res.json())
         .then(d => {
-            console.log(d.msg);
+            console.log(d);
             if (d.code === 0) {
-                setToken("_access", d.access_token);
-                setToken("_refresh", d.refresh_token);
+                console.log("haha")
+                setToken("_access", d.data.access_token);
+                setToken("_refresh", d.data.refresh_token);
                 router.navigate("/");
             } else {
+                setMessage(d.msg);
                 switch (d.msg) {
                     case "Invalid username":
                         setUsername("");
@@ -49,6 +52,7 @@ export default function Login() {
     return (
         <div>
             <h1>Login</h1>
+            {<p style={{color: "red"}}>{message}</p>}
             <Input 
                 value={username}
                 placeholder="Username"
