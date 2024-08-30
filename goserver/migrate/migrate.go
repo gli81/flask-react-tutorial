@@ -30,7 +30,6 @@ func init() {
 		"host=%s user=%v password=%v dbname=go_test port=%v sslmode=disable",
 		host, user, pw, port,
 	)
-
 	db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal("Failed to connect to DB")
