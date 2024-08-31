@@ -39,12 +39,18 @@ func init() {
 
 func CreateUser(c *gin.Context) {
 	// get data from req
+	var body struct {
+		Username string
+		Email    string
+		Password string
+	}
+	c.Bind(&body)
 
 	// create a user
 	user := models.User{
-		Username: "",
-		Password: "",
-		Email:    "",
+		Username: body.Username,
+		Password: body.Password,
+		Email:    body.Email,
 	}
 	rslt := db.Create(&user)
 	if rslt.Error != nil {
