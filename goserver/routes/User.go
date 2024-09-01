@@ -80,3 +80,29 @@ func CreateUser(c *gin.Context) {
 	}
 	c.JSON(201, gin.H{"msg": "User created successful"})
 }
+
+func Login(c *gin.Context) {
+	// get data from req
+	var body struct {
+		Username string `json: "username" binding: "required"`
+		Password string `json: "password" binding: "required"`
+	}
+	c.BindJSON(&body)
+
+	// check if user exists
+	var user models.User
+	if err := db.Where("username = ?", body.Username).First(&user).Error; err == gorm.ErrRecordNotFound {
+		c.JSON(200, gin.H{"msg": "Invalid username"})
+		return
+	} else if err != nil {
+		c.JSON(200, gin.H{"msg": "Internal server error"})
+		return
+	}
+
+	// check password
+	if user.Password != body.Password {
+		c.JSON(200, gin.H{"msg": "Invalid password"})
+		return
+	}
+	c.JSON(200, gin.H{"msg": "Login successful"})
+}

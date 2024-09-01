@@ -39,6 +39,7 @@ func init() {
 func main() {
 	r := gin.Default()
 	r.POST("/signup", routes.CreateUser)
+	r.POST("/login", routes.Login)
 
 	r.Run()
 }
