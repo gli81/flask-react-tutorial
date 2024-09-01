@@ -40,21 +40,43 @@ func init() {
 func CreateUser(c *gin.Context) {
 	// get data from req
 	var body struct {
-		Username string
-		Email    string
-		Password string
+		Username string `json: "username" binding: "required"`
+		Email    string `json: "email" binding: "required"`
+		Password string `json: "password" binding: "required"`
 	}
-	c.Bind(&body)
+	c.BindJSON(&body)
 
-	// create a user
-	user := models.User{
+	// check if user exists
+	var user models.User
+	if err := db.Where("username = ?", body.Username).First(&user).Error; err == nil {
+		// user found
+		c.JSON(200, gin.H{"msg": fmt.Sprintf(
+			"User %s already exists", body.Username,
+		)})
+		return
+	} else if err != gorm.ErrRecordNotFound {
+		c.JSON(200, gin.H{"msg": "Internal server error"})
+		return
+	}
+	// check if email used
+	if err := db.Where("email = ?", body.Email).First(&user).Error; err == nil {
+		// email found
+		c.JSON(200, gin.H{"msg": "Email used"})
+		return
+	} else if err != gorm.ErrRecordNotFound {
+		c.JSON(200, gin.H{"msg": "Internal server error"})
+		return
+	}
+
+	// create new user
+	user = models.User{
 		Username: body.Username,
 		Password: body.Password,
 		Email:    body.Email,
 	}
 	rslt := db.Create(&user)
 	if rslt.Error != nil {
-		c.Status(400)
+		c.JSON(200, gin.H{"error": rslt.Error})
 	}
-	c.JSON(200, gin.H{"user": user})
+	c.JSON(201, gin.H{"msg": "User created successful"})
 }

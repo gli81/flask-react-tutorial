@@ -43,6 +43,7 @@ class SignUp(Resource):
     def post(self):
         data = request.get_json()
         username = data.get("username")
+        email = data.get("email")
         user_exist: "bool" = db.session.execute(
             db.select(User).filter_by(username=username)
         ).scalars().first() != None
@@ -52,9 +53,18 @@ class SignUp(Resource):
                     "msg": f"User {username} already exists"
                 }
             )
+        email_used: "bool" = db.session.execute(
+            db.select(User).filter_by(email=email)
+        ).scalars().first() != None
+        if email_used:
+            return jsonify(
+                {
+                    "msg": f"Email used"
+                }
+            )
         new_user = User(
             username = username,
-            email = data.get("email"),
+            email = email,
             password = generate_password_hash(data.get("password")),
         )
 
